@@ -15,7 +15,11 @@ const WareHouseView = ({
         flex: 1,
       }}
     >
-      <Header label="Warehouse view" goBack={() => navigation.pop()} />
+      <Header
+        label="Warehouse view"
+        goBack={() => navigation.pop()}
+        onEdit={() => navigation.navigate("EditWareHouse", { item })}
+      />
 
       <View
         style={{
@@ -24,12 +28,7 @@ const WareHouseView = ({
           paddingTop: 20,
         }}
       >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
+        <View>
           <Text
             style={{
               fontSize: 22,
@@ -39,19 +38,9 @@ const WareHouseView = ({
           >
             {item?.name}{" "}
           </Text>
-          <Text
-            style={{
-              fontSize: 12,
-              fontWeight: "500",
-              color: "gray",
-              textAlign: "center",
-              alignSelf: "baseline",
-            }}
-          >
-            {item?.code}
-          </Text>
         </View>
 
+        <ItemView name="Code" des={item?.code} />
         <ItemView name="City" des={item?.city} />
         <ItemView name="Space availability" des={item?.space_available} />
 

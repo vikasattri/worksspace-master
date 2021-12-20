@@ -10,18 +10,19 @@ import {
 
 const { width } = Dimensions.get("window");
 
-const Header = ({ label, goBack }) => {
+const Header = ({ label, goBack, onEdit }) => {
   return (
     <View
       style={{
         display: "flex",
         flexDirection: "row",
-        // justifyContent: "center",
+        justifyContent: "space-between",
         alignItems: "center",
         borderBottomColor: "#c1c1c1",
         borderBottomWidth: 1,
         paddingHorizontal: 5,
         marginTop: 20,
+        paddingBottom: 10,
       }}
     >
       <View
@@ -65,6 +66,23 @@ const Header = ({ label, goBack }) => {
           </View>
         </View>
       </View>
+      {onEdit && (
+        <TouchableOpacity onPress={onEdit}>
+          <View
+            style={{
+              paddingRight: 10,
+            }}
+          >
+            <Image
+              style={{
+                height: 15,
+                width: 15,
+              }}
+              source={require("../../assets/editIcon.png")}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

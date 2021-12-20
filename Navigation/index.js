@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomePage from "../Screens/HomePage";
 import WareHouseView from "../Screens/WareHouseView";
+import EditWareHouse from "../Screens/EditWareHouse";
 
 const AuthenticationStack = createStackNavigator();
 
@@ -16,6 +17,11 @@ const routes = [
   {
     name: "ViewWareHouse",
     component: WareHouseView,
+    options: { headerShown: false },
+  },
+  {
+    name: "EditWareHouse",
+    component: EditWareHouse,
     options: { headerShown: false },
   },
 ];

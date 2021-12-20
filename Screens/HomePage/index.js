@@ -1,10 +1,48 @@
-import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+  Dimensions,
+} from "react-native";
 import Header from "../../components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_LIST } from "../../store/constants/Constants";
 
-import warehouseList from "../../warehouseList.json";
+import WAREHOUSELIST from "../../warehouseList.json";
 
 const HomePage = ({ navigation }) => {
+  const { wareHouseList } = useSelector((state) => state.globalReducer.toJS());
+  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState("");
+
+  const search = () => {
+    const listByName = WAREHOUSELIST?.filter(
+      (p) =>
+        p.name.toLowerCase().match(searchText.toLowerCase()) ||
+        p.cluster.toLowerCase().match(searchText.toLowerCase()) ||
+        p.city.toLowerCase().match(searchText?.toLowerCase())
+    );
+
+    dispatch({
+      type: SET_LIST,
+      payload: listByName,
+    });
+  };
+
+  useEffect(() => {
+    if (searchText !== "") {
+      search();
+    } else {
+      dispatch({
+        type: SET_LIST,
+        payload: WAREHOUSELIST,
+      });
+    }
+  }, [searchText]);
+
   return (
     <View
       style={{
@@ -15,9 +53,25 @@ const HomePage = ({ navigation }) => {
 
       <View
         style={{
-          paddingHorizontal: 10,
+          marginHorizontal: 10,
+          paddingTop: 20,
         }}
-      ></View>
+      >
+        <TextInput
+          onChangeText={(val) => {
+            setSearchText(val);
+          }}
+          placeholder="Enter keyword here to search..."
+          style={{
+            height: 40,
+            // width,
+            paddingLeft: 10,
+            borderColor: "gray",
+            borderWidth: 2,
+            borderRadius: 10,
+          }}
+        />
+      </View>
 
       <ScrollView
         style={{
@@ -26,7 +80,7 @@ const HomePage = ({ navigation }) => {
           marginHorizontal: 10,
         }}
       >
-        {warehouseList?.map((item) => (
+        {wareHouseList?.map((item) => (
           <TouchableOpacity
             key={item?.id}
             onPress={() => {
